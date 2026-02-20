@@ -3872,16 +3872,15 @@ static int __meminit init_reserve_notifier(void)
 subsys_initcall(init_reserve_notifier);
 
 /* Simple custom system call for copying from a user buffer to kernel buffer, modifying the bytes, and copying back to user buffer. */
-SYSCALL_DEFINE2(app_helper, char __user *, u_buffer, size_t, size, size_t, val) {
+SYSCALL_DEFINE3(app_helper, char __user *, u_buffer, size_t, size, size_t, val) {
 	unsigned long uncopied_bytes;
-
 
 	char *k_buffer = kmalloc(size, GFP_KERNEL);
 	// Exit if failed to allocate memory to k_buffer.
 	if (k_buffer == NULL) return -ENOMEM;
 
 	// If copy_from_user returns values greater than 0, means there were uncopied bytes, means failure. 
-	uncopied_bytes = copy_from_user(kernel_buf, u_buffer, size);
+	uncopied_bytes = copy_from_user(k_buffer, u_buffer, size);
 	if (uncopied_bytes > 0) {
 		kfree(k_buffer);
 		return -EFAULT;
@@ -3896,7 +3895,7 @@ SYSCALL_DEFINE2(app_helper, char __user *, u_buffer, size_t, size, size_t, val) 
 		return -EFAULT;
 	} 
 	
-	printk(KERN_EMERG "Successfully ran app_helper system call!");
+	printk(KERN_INFO "Successfully ran app_helper system call!");
 
 	kfree(k_buffer);
 	return 0; 

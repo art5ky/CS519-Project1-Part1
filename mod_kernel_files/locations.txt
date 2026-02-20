@@ -1,0 +1,11 @@
+# Important File Locations for Linux Kernel 5.15.0
+
+linux-5.15.0/arch/x86/entry/syscalls/syscall_64.tbl
+
+linux-5.15.0/include/linux/syscalls.h
+
+linux-5.15.0/mm/mmap.c
+
+
+# Helpful Kernel Command for copying new mmap.c after edits
+cp mmap.c /dir/linux-5.15.0/mm/
