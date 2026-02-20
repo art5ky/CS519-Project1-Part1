@@ -7,7 +7,6 @@
 
 #define BUFFER_SIZE 100 
 #define USER_VAL 4
-#define KERNEL_VAL 1
 #define ITERATIONS 500
 #define SYS_APP_HELPER 449
 
@@ -68,7 +67,7 @@ int main() {
         }
     }
 
-    double total_time_ns = (end.tv_sec - start.tv_sec) * 1000000000 + (end.tv_nsec - start.tv_nsec);
+    double total_time_ns = (end.tv_sec - start.tv_sec) * 1000000000L + (end.tv_nsec - start.tv_nsec);
     double avg_per_call_time_ns =  total_time_ns / ITERATIONS; 
 
     printf("Successfully ran the user program without errors!\n");

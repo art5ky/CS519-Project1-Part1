@@ -3872,7 +3872,7 @@ static int __meminit init_reserve_notifier(void)
 subsys_initcall(init_reserve_notifier);
 
 /* Simple custom system call for copying from a user buffer to kernel buffer, modifying the bytes, and copying back to user buffer. */
-SYSCALL_DEFINE3(app_helper, char __user *, u_buffer, size_t, size, size_t, val) {
+SYSCALL_DEFINE2(app_helper, char __user *, u_buffer, size_t, size) {
 	unsigned long uncopied_bytes;
 
 	char *k_buffer = kmalloc(size, GFP_KERNEL);
