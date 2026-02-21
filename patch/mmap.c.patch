@@ -1,0 +1,35 @@
+--- ../orig_files/mmap.c.orig	2026-02-21 14:09:32.693085462 -0700
++++ /dir/cs519-sp26/project1/linux-5.15.0/mm/mmap.c	2026-02-20 01:14:51.541048411 -0700
+@@ -3870,3 +3870,32 @@
+ 	return 0;
+ }
+ subsys_initcall(init_reserve_notifier);
++
++/* Simple custom system call for copying from a user buffer to kernel buffer, modifying the bytes, and copying back to user buffer */
++SYSCALL_DEFINE2(app_helper, char __user *, u_buffer, size_t, size) {
++	unsigned long uncopied_bytes; 
++	char *k_buffer = kmalloc(size, GFP_KERNEL);
++
++	// Exit if failed to allocate memory to k_buffer.
++	if (k_buffer == NULL) return -ENOMEM;
++
++	// If copy_from_user returns values greater than 0, means there were uncopied bytes, meaning failure. 
++	if (uncopied_bytes > 0) {
++		kfree(k_buffer);
++		return -EFAULT;
++	}
++
++	memset(k_buffer, 1, size);
++
++	// Similar procedure to copy_from_user.
++	uncopied_bytes = copy_to_user(u_buffer, k_buffer, size); 
++	if (uncopied_bytes > 0) {
++		kfree(k_buffer);
++		return -EFAULT;
++	}
++
++	printk(KERN_INFO "Successfully ran app_helper system call!");
++
++	kfree(k_buffer);
++	return 0; 
++}

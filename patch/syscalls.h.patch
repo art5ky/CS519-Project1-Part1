@@ -1,0 +1,9 @@
+--- ../orig_files/syscalls.h.orig	2026-02-21 14:13:48.185070791 -0700
++++ /dir/cs519-sp26/project1/linux-5.15.0/include/linux/syscalls.h	2026-02-20 01:08:57.256713795 -0700
+@@ -1389,3 +1389,6 @@
+ int __sys_setsockopt(int fd, int level, int optname, char __user *optval,
+ 		int optlen);
+ #endif
++
++/* mm/mmap.c */
++asmlinkage long sys_app_helper(char __user *u_buffer, size_t size);
