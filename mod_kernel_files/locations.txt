@@ -1,4 +1,4 @@
-# Important File Locations for Linux Kernel 5.15.0
+# Important File Locations and modifications for Linux Kernel 5.15.0
 
 linux-5.15.0/arch/x86/entry/syscalls/syscall_64.tbl
 449 common  app_helper  sys_app_helper
