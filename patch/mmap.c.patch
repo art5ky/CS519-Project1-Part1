@@ -28,7 +28,7 @@
 +		return -EFAULT;
 +	}
 +
-+	printk(KERN_INFO "Successfully ran app_helper system call!");
++	//printk(KERN_INFO "Successfully ran app_helper system call!");
 +
 +	kfree(k_buffer);
 +	return 0; 
