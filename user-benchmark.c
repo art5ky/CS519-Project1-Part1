@@ -7,7 +7,7 @@
 
 #define BUFFER_SIZE 100 
 #define USER_VAL 4
-#define ITERATIONS 500
+#define ITERATIONS 100
 #define SYS_APP_HELPER 449
 
 int main() {
@@ -54,12 +54,13 @@ int main() {
         }
     }
 
-    double total_time_ns = (end.tv_sec - start.tv_sec) * 1000000000L + (end.tv_nsec - start.tv_nsec);
-    double avg_per_call_time_ns =  total_time_ns / ITERATIONS; 
+    // Convert to nanoseconds first to add in the additional nanoseconds provided by timespec and then convert to microseconds. 
+    double total_time_us = ((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec)) / 1000.0;
+    double avg_per_call_time_us =  total_time_us / ITERATIONS; 
 
     printf("app_helper called: %d\n", ITERATIONS);
-    printf("Total time: %.0f ns\n", total_time_ns);
-    printf("Average time per call: %.3f ns\n", avg_per_call_time_ns);
+    printf("Total time: %.3f us\n", total_time_us);
+    printf("Average time per call: %.3f us\n", avg_per_call_time_us);
 
     free(u_buffer);
     return 0;
