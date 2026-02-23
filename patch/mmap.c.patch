@@ -14,7 +14,8 @@
 +	if (k_buffer == NULL) return -ENOMEM;
 +
 +	// If copy_from_user returns values greater than 0, means there were uncopied bytes, meaning failure. 
-+	if (uncopied_bytes > 0) {
++	uncopied_bytes = copy_from_user(k_buffer, u_buffer, size);
++   if (uncopied_bytes > 0) {
 +		kfree(k_buffer);
 +		return -EFAULT;
 +	}
